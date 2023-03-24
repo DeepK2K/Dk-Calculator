@@ -1,46 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <link rel="stylesheet" href="style.css" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Calculator Project</title>
-	</head>
-	<body>
-        <div class="container">
-             <div class="contained">
-            <div class="display">
-                <div id="first-opperand" class="first-opperand"></div>
-                <div  id="second-opperand" class="second-opperand"></div>
-            </div>
-            <div class="top-grid">
-            <button id="all-clear">AC</button>
-            <button id="delete">DEL</button>
-            <button id="operation" class="operator"> / </button>
-            </div>    
-            <div class="m-grid">
-            <button id="number">1</button>
-            <button id="number">2</button>
-            <button id="number">3</button>
-            <button id="operation">*</button>
-            <button id="number">4</button>
-            <button id="number">5</button>
-            <button id="number">6</button>
-            <button  id="operation">+</button>
-            <button id="number">7</button>
-            <button id="number">8</button>
-            <button id="number">9</button>
-            <button  id="operation">-</button>
-            </div>
-            <div class="bottom-grid">
-            <button id="number">.</button>
-            <button id="number">0</button>
-            <button id="equals">=</button>
-            </div>
-           </div>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DK Calculator</title>
+    <style>
+  *{
+    
+    padding:0%;
+    box-sizing:border-box;
+}
+body{
+    background:linear-gradient(to right,rgb(221, 219, 172),rgb(165, 216, 89));
+    height:100vh;
+    width:100vw;
+}
+.container{
+    display:block;
+    width:100vw;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    margin: 0%;
+}
+.contained{
+    top:100px;
+    display:block;
+    width:50vw;
+    height:auto;
+    position:relative;
+    margin:auto;
+    align-items: center;
+    justify-content: center;
+}
+.display{   
+    display:flex;
+    background-color: black;   
+    width:50vw;
+    height:50px;
+    margin:0px;
+    padding-top:10px;
+    padding-bottom:10px;
+    flex-direction:column;
+    align-items:flex-end;
+    justify-content:space-around;
+}
+.first-opperand{
+    color:rgb(250, 236, 236);
+    font-family:"Gotham Rounded", sans-serif;
+}
+.second-opperand{
+    color: white;
+    font-weight: bold;
+    font-size: larger;
+    font-family:"Gotham Rounded", sans-serif;
+}
+.m-grid{
+    display: grid;
+    grid-template-columns:repeat(4,1fr);
+    margin: 0%;
+}
+.top-grid{
+    display: grid;
+    grid-template-columns:repeat(3,1fr);
+    margin: 0%;
+}
+.bottom-grid{
+    display: grid;
+    grid-template-columns:repeat(3,1fr);
+    margin: 0%;
+}
+button{
+    padding-top:10px;
+    padding-bottom:10px;
+    font-weight: bold;
+    font-family:"Gotham Rounded", sans-serif;
+    background-color: rgb(229, 213, 173);
+    color:#000000;
+    border-color: rgb(255, 255, 255);
+    outline: none;
+}
+button:hover{
+    background-color: rgb(209, 152, 133);
+}
+@media screen and (max-width:680px){
+    body{
+        align-items: center;
+        justify-content: center;
+    }
+    .contained{
+        width:150px;
+        align-items: center;
+        justify-content: center;
+    }
+    .display{
+        width:150px;
+    }
+    .first-opperand , .second-opperand{
+        font-size: medium;
+    }
+    
+}
+      
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="contained">
+       <div class="display">
+           <div id="first-opperand" class="first-opperand"></div>
+           <div  id="second-opperand" class="second-opperand"></div>
+       </div>
+       <div class="top-grid">
+       <button id="all-clear">AC</button>
+       <button id="delete">DEL</button>
+       <button id="operation" class="operator"> / </button>
+       </div>    
+       <div class="m-grid">
+       <button id="number">1</button>
+       <button id="number">2</button>
+       <button id="number">3</button>
+       <button id="operation">*</button>
+       <button id="number">4</button>
+       <button id="number">5</button>
+       <button id="number">6</button>
+       <button  id="operation">+</button>
+       <button id="number">7</button>
+       <button id="number">8</button>
+       <button id="number">9</button>
+       <button  id="operation">-</button>
+       </div>
+       <div class="bottom-grid">
+       <button id="number">.</button>
+       <button id="number">0</button>
+       <button id="equals">=</button>
+       </div>
+      </div>
+   </div>
+   <script>
+    class Calculator {
+    constructor(firstOperrandText, secondOperrandText) {
+        this.firstOperrandText = firstOperrandText
+        this.secondOperrandText = secondOperrandText
+        this.clear()
+    }
+    clear() {
+        this.firstOperrand = ''
+        this.secondOperrand = ''
+        this.operation = undefined
+    }
+    delete() {
+        this.secondOperrand = this.secondOperrand.toString().slice(0, -1)
 
-        </div>
-		<script src="script.js"></script>
-	</body>
+    }
+    appendNumber(number) {
+        if (number === '.' && this.secondOperrand.includes('.')) return
+        this.secondOperrand = this.secondOperrand + number.toString()
+
+    }
+    calculate() {
+        let calculated
+        const first = parseFloat(this.firstOperrand)
+        const second = parseFloat(this.secondOperrand)
+        if (isNaN(first) || isNaN(second)) return
+        switch (this.operation) {
+            case '+':
+                calculated = first + second
+                break
+            case '-':
+                calculated = first - second
+                break
+            case '/':
+                calculated = first / second
+                break
+            case '*':
+                calculated = first * second
+                break
+            default:
+                return
+        }
+        this.secondOperrand = calculated
+        this.operation = undefined
+        this.firstOperrand = ''
+
+    }
+    selectOperation(operation) {
+        if (this.secondOperrand === '') return
+        if (this.firstOperrand !== '') {
+            this.calculate()
+        }
+        this.operation = operation
+        this.firstOperrand = this.secondOperrand
+        this.secondOperrand = ''
+
+    }
+    getDisplayNumber(number) {
+        const stringNumber = number.toString()
+        const integerDigits = parseFloat(stringNumber.split('.')[0])
+        const decimalDigits = stringNumber.split('.')[1]
+        let integerDisplay
+        if (isNaN(integerDigits)) {
+            integerDisplay = ''
+        } else {
+            integerDisplay = integerDigits.toLocaleString('en', {
+                maximumFractionDigits: 0
+            })
+        }
+        if (decimalDigits != null) {
+            return `${integerDisplay}.${decimalDigits}`
+        } else {
+            return integerDisplay
+        }
+
+    }
+    updateDisplay() {
+        this.secondOperrandText.innerText = this.getDisplayNumber(this.secondOperrand)
+        if (this.operation != null) {
+            this.firstOperrandText.innerText = `${this.getDisplayNumber(this.firstOperrand)} ${this.operation}`
+        } else {
+            this.firstOperrandText.innerText = ''
+        }
+
+
+    }
+
+}
+const numberButtons = document.querySelectorAll('#number')
+const operationButtons = document.querySelectorAll('#operation')
+const allClearButton = document.querySelector('#all-clear')
+const deleteButton = document.querySelector('#delete')
+const equals = document.querySelector('#equals')
+const firstOperrandText = document.querySelector('#first-opperand')
+const secondOperrandText = document.querySelector('#second-opperand')
+
+const calculator = new Calculator(firstOperrandText, secondOperrandText);
+numberButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        calculator.appendNumber(button.innerText)
+        calculator.updateDisplay()
+    })
+})
+operationButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        calculator.selectOperation(button.innerText)
+        calculator.updateDisplay()
+    })
+})
+equals.addEventListener('click', () => {
+    calculator.calculate()
+    calculator.updateDisplay()
+})
+allClearButton.addEventListener('click', () => {
+    calculator.clear()
+    calculator.updateDisplay()
+})
+deleteButton.addEventListener('click', () => {
+    calculator.delete()
+    calculator.updateDisplay()
+})
+
+   </script>
+</body>
 </html>
