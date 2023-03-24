@@ -1,0 +1,96 @@
+*{
+    
+    padding:0%;
+    box-sizing:border-box;
+}
+body{
+    background:linear-gradient(to right,rgb(221, 219, 172),rgb(165, 216, 89));
+    height:100vh;
+    width:100vw;
+}
+.container{
+    display:block;
+    width:100vw;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    margin: 0%;
+}
+.contained{
+    top:100px;
+    display:block;
+    width:50vw;
+    height:auto;
+    position:relative;
+    margin:auto;
+    align-items: center;
+    justify-content: center;
+}
+.display{   
+    display:flex;
+    background-color: black;   
+    width:50vw;
+    height:50px;
+    margin:0px;
+    padding-top:10px;
+    padding-bottom:10px;
+    flex-direction:column;
+    align-items:flex-end;
+    justify-content:space-around;
+}
+.first-opperand{
+    color:rgb(250, 236, 236);
+    font-family:"Gotham Rounded", sans-serif;
+}
+.second-opperand{
+    color: white;
+    font-weight: bold;
+    font-size: larger;
+    font-family:"Gotham Rounded", sans-serif;
+}
+.m-grid{
+    display: grid;
+    grid-template-columns:repeat(4,1fr);
+    margin: 0%;
+}
+.top-grid{
+    display: grid;
+    grid-template-columns:repeat(3,1fr);
+    margin: 0%;
+}
+.bottom-grid{
+    display: grid;
+    grid-template-columns:repeat(3,1fr);
+    margin: 0%;
+}
+button{
+    padding-top:10px;
+    padding-bottom:10px;
+    font-weight: bold;
+    font-family:"Gotham Rounded", sans-serif;
+    background-color: rgb(229, 213, 173);
+    color:#000000;
+    border-color: rgb(255, 255, 255);
+    outline: none;
+}
+button:hover{
+    background-color: rgb(209, 152, 133);
+}
+@media screen and (max-width:680px){
+    body{
+        align-items: center;
+        justify-content: center;
+    }
+    .contained{
+        width:150px;
+        align-items: center;
+        justify-content: center;
+    }
+    .display{
+        width:150px;
+    }
+    .first-opperand , .second-opperand{
+        font-size: medium;
+    }
+    
+}
